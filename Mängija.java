@@ -22,13 +22,32 @@ class Mängija {
         System.out.println(nimi + " mängib.");
     }
 
-    public static void kasOnTäisealine(int vanus) {
+    public boolean kasOnTäisealine(int vanus) {
         if (vanus >= 18) {
             System.out.println("Mängija on täisealine.");
+            return true;
         } else {
             System.out.println("Mängija ei ole täisealine.");
+            return false;   
         }
     }
 
-    
+    public void lisaKaart(Kaart kaart) {
+        kaardid.add(kaart);
+    }
+
+    public int arvutaPunktid() {
+        int punktid = 0;
+        for (Kaart kaart : kaardid) {
+            punktid += kaart.väärtus; // peab lisama Kaart.java
+        }
+        return punktid;
+    }
+
+    public boolean onBust() {
+        if (arvutaPunktid() > 21) {
+            bust = true;
+        }
+        return bust;
+    }
 }
