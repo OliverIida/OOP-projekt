@@ -1,4 +1,4 @@
-# Pokker
+# Blackjack
 
 ## Objektorienteeritud programmeerimine
 
