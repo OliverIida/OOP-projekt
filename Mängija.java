@@ -50,4 +50,21 @@ class Mängija {
         }
         return bust;
     }
+
+    public boolean onBlackjack() {
+        if (arvutaPunktid() == 21) {
+            blackjack = true;
+        }
+        return blackjack;
+    }
+
+    public void asetaPanus(int summa) {
+        if (summa > raha) {
+            System.out.println("Sul pole piisavalt raha panustamiseks.");
+        } else {
+            panus = summa;
+            raha -= summa;
+            System.out.println(nimi + " on pannud panuse: " + panus);
+        }
+    }
 }
