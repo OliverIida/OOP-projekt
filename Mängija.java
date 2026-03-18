@@ -21,4 +21,14 @@ class Mängija {
     public void mängi() {
         System.out.println(nimi + " mängib.");
     }
+
+    public static void kasOnTäisealine(int vanus) {
+        if (vanus >= 18) {
+            System.out.println("Mängija on täisealine.");
+        } else {
+            System.out.println("Mängija ei ole täisealine.");
+        }
+    }
+
+    
 }
