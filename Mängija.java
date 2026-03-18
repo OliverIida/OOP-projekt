@@ -38,23 +38,32 @@ class Mängija {
 
     public int arvutaPunktid() {
         int punktid = 0;
+        int ässadeArv = 0;
+
         for (Kaart kaart : kaardid) {
-            punktid += kaart.väärtus; // peab lisama Kaart.java
+            punktid += kaart.getPunktiVäärtus();
+
+            if (kaart.onÄss()) {
+                ässadeArv++;
+            }
         }
+
+        // Kui summa läheb üle 21, loeme osa ässasid väärtusena 1.
+        while (punktid > 21 && ässadeArv > 0) {
+            punktid -= 10;
+            ässadeArv--;
+        }
+
         return punktid;
     }
 
     public boolean onBust() {
-        if (arvutaPunktid() > 21) {
-            bust = true;
-        }
+        bust = arvutaPunktid() > 21;
         return bust;
     }
 
     public boolean onBlackjack() {
-        if (arvutaPunktid() == 21) {
-            blackjack = true;
-        }
+        blackjack = kaardid.size() == 2 && arvutaPunktid() == 21;
         return blackjack;
     }
 

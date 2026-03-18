@@ -3,6 +3,10 @@ public class Kaart {
     private final String väärtus;
 
     public Kaart(String mast, String väärtus) {
+        if (mast == null || väärtus == null) {
+            throw new IllegalArgumentException("Kaardi mast ja väärtus peavad olema määratud.");
+        }
+
         this.mast = mast;
         this.väärtus = väärtus;
     }
@@ -15,41 +19,40 @@ public class Kaart {
         return väärtus;
     }
 
-    public String toString() {
-        return väärtus + " " + mast;
-    }
+    // Annab kaardi blackjacki punktiväärtuse.
+    public int getPunktiVäärtus() {
+        if (onÄss()) {
+            return 11;
+        }
 
-    public int getKaardiVäärtus() {
-        switch (väärtus) {
-            case "A":
-                return 11;
-            case "K":
-                return 10;
-            case "Q":
-                return 10;
-            case "J":
-                return 10;
-            case "10":
-                return 10;
-            case "9":
-                return 9;
-            case "8":
-                return 8;
-            case "7":
-                return 7;
-            case "6":
-                return 6;
-            case "5":
-                return 5;
-            case "4":
-                return 4;
-            case "3":
-                return 3;
-            case "2":
-                return 2;
-            default:
-                return 0;
+        if (onPildikaart()) {
+            return 10;
+        }
+
+        try {
+            return Integer.parseInt(väärtus);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Tundmatu kaardi väärtus: " + väärtus, e);
         }
     }
 
+    // Kas kaart on äss, mida saab hiljem lugeda ka väärtusena 1.
+    public boolean onÄss() {
+        return "A".equals(väärtus);
+    }
+
+    // Pildikaardid annavad blackjackis alati 10 punkti.
+    public boolean onPildikaart() {
+        return "K".equals(väärtus) || "Q".equals(väärtus) || "J".equals(väärtus);
+    }
+
+    // Säilitab varasema meetodinime, kui seda kasutatakse mujal koodis.
+    public int getKaardiVäärtus() {
+        return getPunktiVäärtus();
+    }
+
+    @Override
+    public String toString() {
+        return väärtus + " " + mast;
+    }
 }

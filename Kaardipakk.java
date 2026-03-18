@@ -38,11 +38,16 @@ public class Kaardipakk {
             throw new IllegalStateException("Kaardipakk on tühi.");
         }
 
-        return kaardid.remove(0);
+        return kaardid.remove(kaardid.size() - 1);
+    }
+
+    // Säilitab lihtsama nimetuse paki suuruse küsimiseks.
+    public int getSuurus() {
+        return kaardid.size();
     }
 
     public int getKaardipakkiSuurus() {
-        return kaardid.size();
+        return getSuurus();
     }
 
     public boolean onTühi() {
