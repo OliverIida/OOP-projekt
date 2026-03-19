@@ -19,6 +19,22 @@ public class Kaart {
         return väärtus;
     }
 
+    // Tagastab masti jaoks sobiva kaardisümboli.
+    public String getMastiSümbol() {
+        switch (mast) {
+            case "ärtu":
+                return "♥";
+            case "ruutu":
+                return "♦";
+            case "risti":
+                return "♣";
+            case "poti":
+                return "♠";
+            default:
+                return mast;
+        }
+    }
+
     // Annab kaardi blackjacki punktiväärtuse.
     public int getPunktiVäärtus() {
         if (onÄss()) {
@@ -53,6 +69,6 @@ public class Kaart {
 
     @Override
     public String toString() {
-        return väärtus + " " + mast;
+        return väärtus + " " + getMastiSümbol();
     }
 }
