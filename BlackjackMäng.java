@@ -54,7 +54,7 @@ public class BlackjackMäng {
 
     private void alustaVooru() {
         kaardipakk = new Kaardipakk();
-        diiler = new Mängija("Diiler", 18, 0);
+        diiler = new Mängija("Diiler", 90, 0);
         mängija.nulliKaardid();
         diiler.nulliKaardid();
 

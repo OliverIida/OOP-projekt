@@ -110,6 +110,7 @@ class Mängija {
         panus = summa;
         raha -= summa;
         System.out.println(nimi + " on pannud panuse: " + panus);
+        System.out.println();
         return true;
     }
 
