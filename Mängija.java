@@ -22,6 +22,14 @@ class Mängija {
         System.out.println(nimi + " mängib.");
     }
 
+    public String getNimi() {
+        return nimi;
+    }
+
+    public int getRaha() {
+        return raha;
+    }
+
     public boolean kasOnTäisealine(int vanus) {
         if (vanus >= 18) {
             System.out.println("Mängija on täisealine.");
@@ -34,6 +42,30 @@ class Mängija {
 
     public void lisaKaart(Kaart kaart) {
         kaardid.add(kaart);
+    }
+
+    public Kaart getKaart(int indeks) {
+        return kaardid.get(indeks);
+    }
+
+    public void nulliKaardid() {
+        kaardid.clear();
+        bust = false;
+        blackjack = false;
+        panus = 0;
+    }
+
+    public String getKaardidTekstina() {
+        String kaardidTekstina = "";
+
+        for (int i = 0; i < kaardid.size(); i++) {
+            if (i > 0) {
+                kaardidTekstina += ", ";
+            }
+            kaardidTekstina += kaardid.get(i);
+        }
+
+        return kaardidTekstina;
     }
 
     public int arvutaPunktid() {
@@ -69,13 +101,29 @@ class Mängija {
         return blackjack;
     }
 
-    public void asetaPanus(int summa) {
-        if (summa > raha) {
+    public boolean asetaPanus(int summa) {
+        if (summa <= 0 || summa > raha) {
             System.out.println("Sul pole piisavalt raha panustamiseks.");
-        } else {
-            panus = summa;
-            raha -= summa;
-            System.out.println(nimi + " on pannud panuse: " + panus);
+            return false;
         }
+
+        panus = summa;
+        raha -= summa;
+        System.out.println(nimi + " on pannud panuse: " + panus);
+        return true;
+    }
+
+    public void tagastaPanus() {
+        raha += panus;
+        panus = 0;
+    }
+
+    public void võidaPanus() {
+        raha += panus * 2;
+        panus = 0;
+    }
+
+    public void kaotaPanus() {
+        panus = 0;
     }
 }
