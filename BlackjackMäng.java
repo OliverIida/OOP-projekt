@@ -6,11 +6,13 @@ public class BlackjackMäng {
     private Mängija diiler;
     private Kaardipakk kaardipakk;
 
+    // Salvestame mängija ja scanneri, et neid mängu jooksul kasutada.
     public BlackjackMäng(Mängija mängija, Scanner scanner) {
         this.mängija = mängija;
         this.scanner = scanner;
     }
 
+    // See meetod juhib kogu mängu käiku voorude kaupa.
     public void alusta() {
         System.out.println(" ");
         System.out.println("Tere, " + mängija.getNimi() + "! Mäng algab.");
@@ -52,6 +54,7 @@ public class BlackjackMäng {
         System.out.println("Raha sai otsa. Mäng on läbi.");
     }
 
+    // Valmistab ette uue vooru ja nullib eelmise seisu.
     private void alustaVooru() {
         kaardipakk = new Kaardipakk();
         diiler = new Mängija("Diiler", 90, 0);
@@ -62,6 +65,7 @@ public class BlackjackMäng {
         System.out.println("Uus voor.");
     }
 
+    // Küsib mängijalt panuse või võimaldab mäng lõpetada.
     private boolean küsiPanus() {
         while (true) {
             System.out.println("Sul on praegu " + mängija.getRaha() + " eurot.");
@@ -81,6 +85,7 @@ public class BlackjackMäng {
         }
     }
 
+    // Jagab mängijale ja diilerile alguses kaks kaarti.
     private void jagaAlgkaardid() {
         mängija.lisaKaart(kaardipakk.võtaKaart());
         diiler.lisaKaart(kaardipakk.võtaKaart());
@@ -88,12 +93,14 @@ public class BlackjackMäng {
         diiler.lisaKaart(kaardipakk.võtaKaart());
     }
 
+    // Näitab mängijale tema enda seisu ja diileri ühte kaarti.
     private void näitaAlgseis() {
         System.out.println("Sinu kaardid: " + mängija.getKaardidTekstina());
         System.out.println("Sinu punktid: " + mängija.arvutaPunktid());
         System.out.println("Diileri nähtav kaart: " + diiler.getKaart(0));
     }
 
+    // Kontrollib, kas kellelgi tuli kohe alguses blackjack.
     private boolean kontrolliBlackjack() {
         boolean mängijalOnBlackjack = mängija.onBlackjack();
         boolean diilerilOnBlackjack = diiler.onBlackjack();
@@ -119,6 +126,7 @@ public class BlackjackMäng {
         return true;
     }
 
+    // Siin saab mängija otsustada, kas võtab kaardi või jääb pidama.
     private boolean mängijaKäik() {
         while (true) {
             if (mängija.arvutaPunktid() >= 21) {
@@ -148,6 +156,7 @@ public class BlackjackMäng {
         }
     }
 
+    // Diiler võtab kaarte seni, kuni tal on vähemalt 17 punkti.
     private void diileriKäik() {
         System.out.println("Diileri kord.");
         System.out.println("Diileri kaardid: " + diiler.getKaardidTekstina());
@@ -161,6 +170,7 @@ public class BlackjackMäng {
         }
     }
 
+    // Võrdleb vooru lõpus mängija ja diileri tulemusi.
     private void lõpetaVoor() {
         int mängijaPunktid = mängija.arvutaPunktid();
         int diileriPunktid = diiler.arvutaPunktid();
@@ -183,6 +193,7 @@ public class BlackjackMäng {
         }
     }
 
+    // Näitab mängijale, kui palju raha tal alles on.
     private void näitaRaha() {
         System.out.println("Sul on nüüd " + mängija.getRaha() + " eurot.");
     }
