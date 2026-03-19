@@ -7,6 +7,7 @@ Lihtne terminali Blackjack mäng, kus eesmärk on saada punktisumma võimalikult
 Ava projektikaust terminalis ja käivita:
 
 ```bash
+cd oop-projekt
 javac *.java
 java Main
 ```
