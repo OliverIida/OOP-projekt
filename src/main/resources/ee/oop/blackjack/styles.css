@@ -1,0 +1,49 @@
+.root {
+    -fx-font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+    -fx-background-color: linear-gradient(to bottom, #14532d, #0f172a);
+}
+
+.panel {
+    -fx-background-color: rgba(255, 255, 255, 0.10);
+    -fx-background-radius: 16;
+    -fx-border-radius: 16;
+    -fx-border-color: rgba(255, 255, 255, 0.18);
+    -fx-padding: 16;
+}
+
+.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #f8fafc;
+}
+
+.section-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #f8fafc;
+}
+
+.muted {
+    -fx-text-fill: #cbd5e1;
+}
+
+.card-chip {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: #cbd5e1;
+    -fx-padding: 10 14 10 14;
+    -fx-font-size: 16px;
+    -fx-text-fill: #0f172a;
+}
+
+.action-button {
+    -fx-background-radius: 12;
+    -fx-padding: 10 16 10 16;
+}
+
+.status-box {
+    -fx-background-color: rgba(15, 23, 42, 0.45);
+    -fx-background-radius: 14;
+    -fx-padding: 14;
+}
