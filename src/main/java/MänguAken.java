@@ -214,6 +214,9 @@ public class MänguAken extends Application {
         lava.setOnCloseRequest(e -> kokkuvõtja.koostaKokkuvõte());
 
         lava.setScene(mänguStseen);
+        // Mängukuval on vaja rohkem ruumi kui avakuval, et nupud alla ei jääks varju.
+        lava.setMinWidth(560);
+        lava.setMinHeight(600);
         valmistaPanusFaas();
     }
 
