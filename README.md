@@ -1,29 +1,37 @@
 # Blackjack
 
-Lihtne terminali Blackjack mäng, kus eesmärk on saada punktisumma võimalikult 21 lähedale ilma üle minemata.
+Lihtne Blackjack mäng JavaFX kasutajaliidesega, kus eesmärk on saada punktisumma võimalikult 21 lähedale ilma üle minemata.
 
 ## Kuidas käivitada
 
-Ava projektikaust terminalis ja käivita:
+Eeldus: **Java 17+** on installitud ja PATH-is.
 
-```bash
-cd oop-projekt
-javac *.java
-java Main
+Windows (PowerShell või cmd):
 ```
+.\käivita.cmd
+```
+
+Linux / MacOS:
+```bash
+./käivita.sh
+```
+
+Skript laeb esmakordsel käivitamisel Maveni ise alla ja avab seejärel mängu akna. Eraldi midagi (Maven, JAVA_HOME, JavaFX SDK) installida ega seadistada ei ole vaja.
 
 ## Kuidas mängida
 
-Pärast käivitamist sisesta:
+Pärast käivitamist sisesta avakuval:
 - oma nimi
 - vanus
 - summa, millega soovid mängida
-- panus
 
-Seejärel kasuta neid käske:
+Mängu ajal saad kasutada hiirt või klaviatuuri:
 - `1` - võta üks kaart juurde
 - `2` - jää pidama
-- `q` - lõpeta mäng
+- `Enter` - panusta või alusta uut vooru
+- `Q` - lõpeta mäng
+
+Iga vooru tulemus kirjutatakse faili `logid.csv` kujul `mängijaSkoor,diileriSkoor,panus,tulemus`. Mängu lõpetamisel (`Q`, Lõpeta-nupp või akna sulgemine) loetakse kogu logifail uuesti ja koostatakse selle põhjal `kokkuvõte.md`, kus on kirjas võidetud/kaotatud voorude arv ning võidetud/kaotatud raha kokku.
 
 ## Kuidas diiler töötab
 
