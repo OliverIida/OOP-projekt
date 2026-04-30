@@ -13,6 +13,7 @@ import java.util.function.Supplier;
 public final class BlackjackGameEngine {
     private final Supplier<Deck> deckSupplier;
     private final GameState state;
+    private final RoundLogger roundLogger;
 
     public BlackjackGameEngine() {
         this(Deck::shuffledStandardDeck);
@@ -21,6 +22,7 @@ public final class BlackjackGameEngine {
     public BlackjackGameEngine(Supplier<Deck> deckSupplier) {
         this.deckSupplier = Objects.requireNonNull(deckSupplier, "Kaardipaki looja peab olemas olema.");
         this.state = new GameState();
+        this.roundLogger = new RoundLogger("logid.csv");
     }
 
     public GameState getState() {
@@ -225,6 +227,8 @@ public final class BlackjackGameEngine {
     }
 
     private void finishRound(String message) {
+        logRound();
+
         if (state.getPlayer().getBankroll() <= 0) {
             state.setPhase(GamePhase.GAME_OVER);
             state.setLastMessage(message + " Raha sai otsa. Alusta uut mangu.");
@@ -233,5 +237,29 @@ public final class BlackjackGameEngine {
 
         state.setPhase(GamePhase.ROUND_OVER);
         state.setLastMessage(message + " Vajuta Uus voor, et jatkata.");
+    }
+
+    private void logRound() {
+        Player player = state.getPlayer();
+        Player dealer = state.getDealer();
+        roundLogger.log(player.calculatePoints(), dealer.calculatePoints(), determineOutcome(player, dealer));
+    }
+
+    private String determineOutcome(Player player, Player dealer) {
+        if (player.isBust()) {
+            return "DIILERI VÕIT";
+        }
+        if (dealer.isBust()) {
+            return "MÄNGIJA VÕIT";
+        }
+        int playerPoints = player.calculatePoints();
+        int dealerPoints = dealer.calculatePoints();
+        if (playerPoints > dealerPoints) {
+            return "MÄNGIJA VÕIT";
+        }
+        if (playerPoints < dealerPoints) {
+            return "DIILERI VÕIT";
+        }
+        return "VIIK";
     }
 }

@@ -3,3 +3,4 @@ target/
 .m2/
 .mvn/wrapper/maven-wrapper.jar
 data/savegame.json
+logid.csv
