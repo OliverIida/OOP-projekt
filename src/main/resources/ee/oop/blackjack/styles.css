@@ -1,49 +1,70 @@
 .root {
     -fx-font-family: "Segoe UI", "Helvetica Neue", sans-serif;
-    -fx-background-color: linear-gradient(to bottom, #14532d, #0f172a);
+    -fx-background-color: #0f5132;
+    -fx-text-fill: #f8fafc;
 }
 
-.panel {
-    -fx-background-color: rgba(255, 255, 255, 0.10);
-    -fx-background-radius: 16;
-    -fx-border-radius: 16;
-    -fx-border-color: rgba(255, 255, 255, 0.18);
+.root-pane {
     -fx-padding: 16;
 }
 
 .title {
-    -fx-font-size: 24px;
+    -fx-font-size: 32px;
     -fx-font-weight: bold;
     -fx-text-fill: #f8fafc;
 }
 
-.section-title {
+.bankroll {
+    -fx-font-size: 16px;
+    -fx-text-fill: #f8fafc;
+}
+
+.hand-title {
     -fx-font-size: 18px;
     -fx-font-weight: bold;
     -fx-text-fill: #f8fafc;
 }
 
-.muted {
+.status {
     -fx-text-fill: #cbd5e1;
+    -fx-font-size: 14px;
 }
 
-.card-chip {
+.primary {
+    -fx-background-radius: 8;
+    -fx-padding: 8 18;
+}
+
+.card {
+    -fx-min-width: 64;
+    -fx-min-height: 92;
+    -fx-pref-width: 64;
+    -fx-pref-height: 92;
     -fx-background-color: #f8fafc;
-    -fx-background-radius: 12;
-    -fx-border-radius: 12;
-    -fx-border-color: #cbd5e1;
-    -fx-padding: 10 14 10 14;
-    -fx-font-size: 16px;
+    -fx-background-radius: 8;
+    -fx-border-color: #94a3b8;
+    -fx-border-radius: 8;
+    -fx-padding: 6;
+    -fx-spacing: 4;
+}
+
+.card-back {
+    -fx-background-color: #1e3a8a;
+    -fx-border-color: #f8fafc;
+}
+
+.card-rank {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
     -fx-text-fill: #0f172a;
 }
 
-.action-button {
-    -fx-background-radius: 12;
-    -fx-padding: 10 16 10 16;
+.card-suit {
+    -fx-font-size: 32px;
+    -fx-text-fill: #0f172a;
 }
 
-.status-box {
-    -fx-background-color: rgba(15, 23, 42, 0.45);
-    -fx-background-radius: 14;
-    -fx-padding: 14;
+.card-rank.red,
+.card-suit.red {
+    -fx-text-fill: #dc2626;
 }

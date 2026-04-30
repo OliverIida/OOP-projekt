@@ -101,7 +101,7 @@ public final class BlackjackGameEngine {
         }
 
         state.setPhase(GamePhase.PLAYER_TURN);
-        state.setLastMessage("Voor algas. Kasuta nuppe voi klahve H ja S.");
+        state.setLastMessage("");
     }
 
     public void hit() {

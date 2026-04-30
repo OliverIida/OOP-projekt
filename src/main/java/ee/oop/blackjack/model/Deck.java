@@ -37,7 +37,7 @@ public final class Deck {
 
     public Card drawCard() {
         if (cards.isEmpty()) {
-            throw new IllegalStateException("Kaardipakk on tyhi.");
+            throw new IllegalStateException("Kaardipakk on tühi.");
         }
         return cards.remove(0);
     }
