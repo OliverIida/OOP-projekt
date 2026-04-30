@@ -20,6 +20,7 @@ public class MänguAken extends Application {
     private Mängija diiler;
     private Kaardipakk kaardipakk;
     private LogiSalvestaja logija;
+    private KokkuvõtteSalvestaja kokkuvõtja;
 
     // Avakuva väljad
     private TextField nimiVäli;
@@ -47,6 +48,7 @@ public class MänguAken extends Application {
     @Override
     public void start(Stage lava) {
         logija = new LogiSalvestaja("logid.csv");
+        kokkuvõtja = new KokkuvõtteSalvestaja("logid.csv", "kokkuvõte.md");
         näitaAvakuva(lava);
     }
 
@@ -170,7 +172,7 @@ public class MänguAken extends Application {
         uusVoorNupp.setDisable(true);
 
         lõpetaNupp = new Button("Lõpeta (Q)");
-        lõpetaNupp.setOnAction(e -> lava.close());
+        lõpetaNupp.setOnAction(e -> lõpetaMäng(lava));
 
         sõnumSilt = new Label();
 
@@ -198,7 +200,7 @@ public class MänguAken extends Application {
             } else if (kood == KeyCode.DIGIT2 && !jääPidamaNupp.isDisabled()) {
                 jääPidama();
             } else if (kood == KeyCode.Q) {
-                lava.close();
+                lõpetaMäng(lava);
             } else if (kood == KeyCode.ENTER) {
                 if (!panustaNupp.isDisabled()) {
                     panusta();
@@ -208,8 +210,17 @@ public class MänguAken extends Application {
             }
         });
 
+        // Kui kasutaja sulgeb akna X-iga, koostame samuti kokkuvõtte.
+        lava.setOnCloseRequest(e -> kokkuvõtja.koostaKokkuvõte());
+
         lava.setScene(mänguStseen);
         valmistaPanusFaas();
+    }
+
+    // Koostab kokkuvõtte ja sulgeb akna.
+    private void lõpetaMäng(Stage lava) {
+        kokkuvõtja.koostaKokkuvõte();
+        lava.close();
     }
 
     // Valmistab uue vooru ette: uus pakk, tühjad käed, panuse küsimine.
@@ -363,12 +374,13 @@ public class MänguAken extends Application {
         if (mängija.onBust()) {
             int mPunktid = mängija.arvutaPunktid();
             int dPunktid = diiler.arvutaPunktid();
+            int panus = mängija.panus;
             mängija.kaotaPanus();
             näitaSeisu(true);
             sõnumSilt.setText("Läksid üle 21. Kaotasid selle vooru.");
             võtaKaartNupp.setDisable(true);
             jääPidamaNupp.setDisable(true);
-            logija.salvestaVoor(mPunktid, dPunktid, "DIILERI VÕIT");
+            logija.salvestaVoor(mPunktid, dPunktid, panus, "DIILERI VÕIT");
             valmistaUueVooruVõiLõpu();
         } else if (mängija.arvutaPunktid() == 21) {
             // 21 punkti puhul ei ole mõtet enam kaarte võtta — diiler mängib.
@@ -397,6 +409,7 @@ public class MänguAken extends Application {
     private void lõpetaVoor() {
         int mPunktid = mängija.arvutaPunktid();
         int dPunktid = diiler.arvutaPunktid();
+        int panus = mängija.panus;
         String tulemus;
 
         if (diiler.onBust()) {
@@ -417,7 +430,7 @@ public class MänguAken extends Application {
             tulemus = "DIILERI VÕIT";
         }
 
-        logija.salvestaVoor(mPunktid, dPunktid, tulemus);
+        logija.salvestaVoor(mPunktid, dPunktid, panus, tulemus);
     }
 
     // Voor lõppeb kohe, kui kellelgi on alguses blackjack.
@@ -427,6 +440,7 @@ public class MänguAken extends Application {
         boolean dB = diiler.onBlackjack();
         int mPunktid = mängija.arvutaPunktid();
         int dPunktid = diiler.arvutaPunktid();
+        int panus = mängija.panus;
         String tulemus;
 
         if (mB && dB) {
@@ -443,7 +457,7 @@ public class MänguAken extends Application {
             tulemus = "DIILERI VÕIT";
         }
 
-        logija.salvestaVoor(mPunktid, dPunktid, tulemus);
+        logija.salvestaVoor(mPunktid, dPunktid, panus, tulemus);
         valmistaUueVooruVõiLõpu();
     }
 

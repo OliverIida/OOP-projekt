@@ -19,16 +19,16 @@ public class LogiSalvestaja {
         }
 
         try (FileWriter kirjutaja = new FileWriter(fail)) {
-            kirjutaja.write("mängijaSkoor,diileriSkoor,tulemus\n");
+            kirjutaja.write("mängijaSkoor,diileriSkoor,panus,tulemus\n");
         } catch (IOException e) {
             System.out.println("Logifaili loomine ebaõnnestus: " + e.getMessage());
         }
     }
 
     // Lisab faili lõppu uue vooru tulemuse.
-    public void salvestaVoor(int mängijaSkoor, int diileriSkoor, String tulemus) {
+    public void salvestaVoor(int mängijaSkoor, int diileriSkoor, int panus, String tulemus) {
         try (FileWriter kirjutaja = new FileWriter(failiNimi, true)) {
-            kirjutaja.write(mängijaSkoor + "," + diileriSkoor + "," + tulemus + "\n");
+            kirjutaja.write(mängijaSkoor + "," + diileriSkoor + "," + panus + "," + tulemus + "\n");
         } catch (IOException e) {
             System.out.println("Logifaili kirjutamine ebaõnnestus: " + e.getMessage());
         }

@@ -31,7 +31,7 @@ Mängu ajal saad kasutada hiirt või klaviatuuri:
 - `Enter` - panusta või alusta uut vooru
 - `Q` - lõpeta mäng
 
-Iga vooru tulemus kirjutatakse faili `logid.csv` kujul `mängijaSkoor,diileriSkoor,tulemus`.
+Iga vooru tulemus kirjutatakse faili `logid.csv` kujul `mängijaSkoor,diileriSkoor,panus,tulemus`. Mängu lõpetamisel (`Q`, Lõpeta-nupp või akna sulgemine) loetakse kogu logifail uuesti ja koostatakse selle põhjal `kokkuvõte.md`, kus on kirjas võidetud/kaotatud voorude arv ning võidetud/kaotatud raha kokku.
 
 ## Kuidas diiler töötab
 
