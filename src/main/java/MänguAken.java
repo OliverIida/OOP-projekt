@@ -6,8 +6,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -27,9 +29,9 @@ public class MänguAken extends Application {
 
     // Mängukuva sildid
     private Label rahaSilt;
-    private Label diileriKaardidSilt;
+    private HBox diileriKaardidKast;
     private Label diileriPunktidSilt;
-    private Label mängijaKaardidSilt;
+    private HBox mängijaKaardidKast;
     private Label mängijaPunktidSilt;
     private Label sõnumSilt;
 
@@ -133,15 +135,17 @@ public class MänguAken extends Application {
         rahaSilt = new Label();
         rahaSilt.setStyle("-fx-font-weight: bold;");
 
-        diileriKaardidSilt = new Label("Diileri kaardid:");
-        diileriPunktidSilt = new Label("Diileri punktid:");
-        VBox diileriAla = new VBox(5, new Label("Diiler"), diileriKaardidSilt, diileriPunktidSilt);
+        diileriKaardidKast = new HBox(8);
+        diileriKaardidKast.setMinHeight(90);
+        diileriPunktidSilt = new Label("Diileri punktid: -");
+        VBox diileriAla = new VBox(5, new Label("Diiler"), diileriKaardidKast, diileriPunktidSilt);
         diileriAla.setPadding(new Insets(10));
         diileriAla.setStyle("-fx-border-color: gray; -fx-border-radius: 5;");
 
-        mängijaKaardidSilt = new Label("Sinu kaardid:");
-        mängijaPunktidSilt = new Label("Sinu punktid:");
-        VBox mängijaAla = new VBox(5, new Label("Mängija"), mängijaKaardidSilt, mängijaPunktidSilt);
+        mängijaKaardidKast = new HBox(8);
+        mängijaKaardidKast.setMinHeight(90);
+        mängijaPunktidSilt = new Label("Sinu punktid: -");
+        VBox mängijaAla = new VBox(5, new Label("Mängija"), mängijaKaardidKast, mängijaPunktidSilt);
         mängijaAla.setPadding(new Insets(10));
         mängijaAla.setStyle("-fx-border-color: gray; -fx-border-radius: 5;");
 
@@ -216,9 +220,9 @@ public class MänguAken extends Application {
         diiler.nulliKaardid();
 
         rahaSilt.setText("Sul on " + mängija.getRaha() + " eurot.");
-        diileriKaardidSilt.setText("Diileri kaardid: -");
+        diileriKaardidKast.getChildren().clear();
         diileriPunktidSilt.setText("Diileri punktid: -");
-        mängijaKaardidSilt.setText("Sinu kaardid: -");
+        mängijaKaardidKast.getChildren().clear();
         mängijaPunktidSilt.setText("Sinu punktid: -");
         sõnumSilt.setText("Sisesta panus, et alustada uut vooru.");
         panusVeaSilt.setText("");
@@ -256,7 +260,7 @@ public class MänguAken extends Application {
                 sõnumSilt.setText("Vali: võta kaart (1) või jää pidama (2).");
             }
         } catch (NumberFormatException e) {
-            panusVeaSilt.setText("Panus peab olema number.");
+            panusVeaSilt.setText("Panus peab olema täisnumber.");
         }
     }
 
@@ -268,19 +272,86 @@ public class MänguAken extends Application {
         diiler.lisaKaart(kaardipakk.võtaKaart());
     }
 
-    // Värskendab kaartide ja punktide silte.
+    // Värskendab kaartide paneele ja punktide silte.
     // näitaDiileriKõik = true puhul näeme diileri tervet kätt.
     private void näitaSeisu(boolean näitaDiileriKõik) {
-        mängijaKaardidSilt.setText("Sinu kaardid: " + mängija.getKaardidTekstina());
+        mängijaKaardidKast.getChildren().clear();
+        for (int i = 0; i < mängija.kaardid.size(); i++) {
+            mängijaKaardidKast.getChildren().add(looKaardiPaneel(mängija.getKaart(i)));
+        }
         mängijaPunktidSilt.setText("Sinu punktid: " + mängija.arvutaPunktid());
 
+        diileriKaardidKast.getChildren().clear();
         if (näitaDiileriKõik) {
-            diileriKaardidSilt.setText("Diileri kaardid: " + diiler.getKaardidTekstina());
+            for (int i = 0; i < diiler.kaardid.size(); i++) {
+                diileriKaardidKast.getChildren().add(looKaardiPaneel(diiler.getKaart(i)));
+            }
             diileriPunktidSilt.setText("Diileri punktid: " + diiler.arvutaPunktid());
         } else {
-            diileriKaardidSilt.setText("Diileri nähtav kaart: " + diiler.getKaart(0));
-            diileriPunktidSilt.setText("Diileri punktid: ?");
+            diileriKaardidKast.getChildren().add(looKaardiPaneel(diiler.getKaart(0)));
+            diileriKaardidKast.getChildren().add(looPööratudKaart());
+            int nähtavadPunktid = diiler.getKaart(0).getPunktiVäärtus();
+            diileriPunktidSilt.setText("Diileri punktid: " + nähtavadPunktid);
         }
+    }
+
+    // Joonistab ühe kaardi paneeli (number ülal, mast keskel).
+    private Node looKaardiPaneel(Kaart kaart) {
+        String sümbol;
+        String värv;
+
+        switch (kaart.getMast()) {
+            case "ärtu":
+                sümbol = "♥"; // ♥
+                värv = "red";
+                break;
+            case "ruutu":
+                sümbol = "♦"; // ♦
+                värv = "red";
+                break;
+            case "risti":
+                sümbol = "♣"; // ♣
+                värv = "black";
+                break;
+            case "poti":
+                sümbol = "♠"; // ♠
+                värv = "black";
+                break;
+            default:
+                sümbol = "?";
+                värv = "black";
+        }
+
+        Label väärtusSilt = new Label(kaart.getVäärtus());
+        väärtusSilt.setStyle("-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: " + värv + ";");
+
+        Label sümbolSilt = new Label(sümbol);
+        sümbolSilt.setStyle("-fx-font-size: 24; -fx-text-fill: " + värv + ";");
+
+        VBox paneel = new VBox(2, väärtusSilt, sümbolSilt);
+        paneel.setAlignment(Pos.CENTER);
+        paneel.setPrefSize(55, 80);
+        paneel.setStyle(
+                "-fx-background-color: white;"
+                        + "-fx-border-color: black;"
+                        + "-fx-border-radius: 5;"
+                        + "-fx-background-radius: 5;");
+        return paneel;
+    }
+
+    // Joonistab pööratud kaardi (näitab ainult küsimärki).
+    private Node looPööratudKaart() {
+        Label küsimärk = new Label("?");
+        küsimärk.setStyle("-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: white;");
+
+        StackPane paneel = new StackPane(küsimärk);
+        paneel.setPrefSize(55, 80);
+        paneel.setStyle(
+                "-fx-background-color: #4a6fa5;"
+                        + "-fx-border-color: black;"
+                        + "-fx-border-radius: 5;"
+                        + "-fx-background-radius: 5;");
+        return paneel;
     }
 
     // Mängija võtab veel ühe kaardi.

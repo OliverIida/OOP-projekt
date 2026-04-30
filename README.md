@@ -7,13 +7,11 @@ Lihtne Blackjack mäng JavaFX kasutajaliidesega, kus eesmärk on saada punktisum
 Eeldus: **Java 17+** on installitud ja PATH-is.
 
 Windows (PowerShell või cmd):
-
 ```
 .\käivita.cmd
 ```
 
-Linux / macOS:
-
+Linux / MacOS:
 ```bash
 ./käivita.sh
 ```
