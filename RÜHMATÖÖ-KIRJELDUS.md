@@ -55,7 +55,7 @@ Kolmandas etapis lisasime nõuetekohase failidega töötamise: klass `LogiSalves
 
 ## Tehisintellekti kasutamise kirjeldus
 
-Kasutasime JavaFX kasutajaliidese ehitamisel abivahendina tehisintellekti (Claude). AI aitas peamiselt JavaFX layoutide (VBox, HBox, StackPane) seadistamisel, sündmuste sidumisel ning Maven Wrapperi paigaldamisel. Mängu reeglid, andmeklassid (`Mängija`, `Kaart`, `Kaardipakk`), failidega töötamise loogika ja sisendite valideerimine on rühmaliikmete endi kirjutatud ja arusaadavad. AI väljundeid kontrollisime ja muutsime ise, et need vastaksid meie koodistiilile (eestikeelsed muutujad, lihtne ja algajasõbralik kood).
+Kasutasime JavaFX kasutajaliidese ehitamisel abivahendina tehisintellekti (Claude). AI aitas peamiselt JavaFX layoutide (VBox, HBox, FlowPane, StackPane) seadistamisel, sündmuste sidumisel ning Maven Wrapperi paigaldamisel. Mängu reeglid, andmeklassid (`Mängija`, `Kaart`, `Kaardipakk`), failidega töötamise loogika ja sisendite valideerimine on rühmaliikmete endi kirjutatud ja arusaadavad. AI väljundeid kontrollisime ja muutsime ise, et need vastaksid meie koodistiilile (eestikeelsed muutujad, lihtne ja algajasõbralik kood).
 
 ## Rühmaliikmete panus ja ajakulu
 

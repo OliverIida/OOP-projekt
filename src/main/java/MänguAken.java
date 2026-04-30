@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.Node;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
@@ -30,9 +31,9 @@ public class MänguAken extends Application {
 
     // Mängukuva sildid
     private Label rahaSilt;
-    private HBox diileriKaardidKast;
+    private FlowPane diileriKaardidKast;
     private Label diileriPunktidSilt;
-    private HBox mängijaKaardidKast;
+    private FlowPane mängijaKaardidKast;
     private Label mängijaPunktidSilt;
     private Label sõnumSilt;
 
@@ -59,6 +60,7 @@ public class MänguAken extends Application {
                 "Eesmärk on saada võimalikult 21 lähedale, aga mitte üle 21.\n"
                         + "Numbrikaardid on oma väärtusega, J/Q/K = 10, A = 1 või 11.\n"
                         + "Mängu ajal saad: võtta kaardi (1), jääda pidama (2) või lõpetada (Q).");
+        info.setWrapText(true);
 
         Label nimiSilt = new Label("Nimi:");
         nimiVäli = new TextField();
@@ -84,6 +86,7 @@ public class MänguAken extends Application {
         Scene avaStseen = new Scene(juur, 520, 480);
 
         // Tekstiväljad on poole akna laiused ja keskele joondatud.
+        info.maxWidthProperty().bind(avaStseen.widthProperty().subtract(40));
         nimiVäli.maxWidthProperty().bind(avaStseen.widthProperty().divide(2));
         vanusVäli.maxWidthProperty().bind(avaStseen.widthProperty().divide(2));
         rahaVäli.maxWidthProperty().bind(avaStseen.widthProperty().divide(2));
@@ -137,14 +140,16 @@ public class MänguAken extends Application {
         rahaSilt = new Label();
         rahaSilt.setStyle("-fx-font-weight: bold;");
 
-        diileriKaardidKast = new HBox(8);
+        diileriKaardidKast = new FlowPane(8, 8);
+        diileriKaardidKast.setAlignment(Pos.CENTER_LEFT);
         diileriKaardidKast.setMinHeight(90);
         diileriPunktidSilt = new Label("Diileri punktid: -");
         VBox diileriAla = new VBox(5, new Label("Diiler"), diileriKaardidKast, diileriPunktidSilt);
         diileriAla.setPadding(new Insets(10));
         diileriAla.setStyle("-fx-border-color: gray; -fx-border-radius: 5;");
 
-        mängijaKaardidKast = new HBox(8);
+        mängijaKaardidKast = new FlowPane(8, 8);
+        mängijaKaardidKast.setAlignment(Pos.CENTER_LEFT);
         mängijaKaardidKast.setMinHeight(90);
         mängijaPunktidSilt = new Label("Sinu punktid: -");
         VBox mängijaAla = new VBox(5, new Label("Mängija"), mängijaKaardidKast, mängijaPunktidSilt);
@@ -175,6 +180,7 @@ public class MänguAken extends Application {
         lõpetaNupp.setOnAction(e -> lõpetaMäng(lava));
 
         sõnumSilt = new Label();
+        sõnumSilt.setWrapText(true);
 
         HBox panuseRiba = new HBox(10, new Label("Panus:"), panusVäli, panustaNupp, panusVeaSilt);
         panuseRiba.setAlignment(Pos.CENTER_LEFT);
@@ -191,6 +197,7 @@ public class MänguAken extends Application {
         VBox.setVgrow(mängijaAla, Priority.ALWAYS);
 
         Scene mänguStseen = new Scene(juur, 620, 560);
+        sõnumSilt.maxWidthProperty().bind(mänguStseen.widthProperty().subtract(40));
 
         // Klaviatuur: 1, 2, Q ja Enter teevad sama, mis nupud.
         mänguStseen.setOnKeyPressed(e -> {

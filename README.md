@@ -13,8 +13,11 @@ Windows (PowerShell või cmd):
 
 Linux / MacOS:
 ```bash
+chmod +x käivita.sh mvnw
 ./käivita.sh
 ```
+
+`chmod` käsku on vaja ainult üks kord, kui terminal ütleb `permission denied`.
 
 Skript laeb esmakordsel käivitamisel Maveni ise alla ja avab seejärel mängu akna. Eraldi midagi (Maven, JAVA_HOME, JavaFX SDK) installida ega seadistada ei ole vaja.
 

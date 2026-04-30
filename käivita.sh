@@ -13,4 +13,16 @@ fi
 
 echo "Kasutan JAVA_HOME=$JAVA_HOME"
 DIR="$(cd "$(dirname "$0")" && pwd)"
-"$DIR/mvnw" javafx:run "$@"
+MVNW="$DIR/mvnw"
+
+if [ ! -f "$MVNW" ]; then
+    echo "ERROR: Maven wrapperit ei leitud: $MVNW"
+    exit 1
+fi
+
+if [ -x "$MVNW" ]; then
+    exec "$MVNW" javafx:run "$@"
+else
+    echo "Märkus: mvnw ei ole käivitatav; kasutan 'sh mvnw'."
+    exec sh "$MVNW" javafx:run "$@"
+fi
